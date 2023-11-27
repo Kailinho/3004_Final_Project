@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "aed.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +18,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    AED aed;
+
+private slots:
+    void pressPowerButton();
 };
 #endif // MAINWINDOW_H

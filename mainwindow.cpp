@@ -6,6 +6,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    aed.createPatient("Someone", 18); // First scenario so we can start coding
+
+    connect(ui->powerOnButton, SIGNAL(released()), this, SLOT(pressPowerButton()));
 }
 
 MainWindow::~MainWindow()
@@ -13,3 +17,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::pressPowerButton()
+{
+    if(aed.getDeviceStatus() == false)
+    {
+        aed.setDeviceOn();
+    }
+    else
+    {
+        aed.setDeviceOff();
+    }
+}

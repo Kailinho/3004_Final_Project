@@ -1,14 +1,18 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
-#include <string>
+#include <QtGlobal>
+#include <QString>
+
+using namespace std;
 
 class Patient
 {
 public:
-    Patient();
+    Patient(QString name, int age);
+    bool isAnAdult();
 private:
-    std::string name;
+    QString name;
     int age;
     bool isAlive;
     bool isShockable;
