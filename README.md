@@ -13,12 +13,13 @@ class MainWindow {
 }
 
 class AED {
-    -bool status
+    -bool deviceStatus
     -bool areAdultPadsApplied
     -bool areChildPadsApplied
     -int chargeDeliveredCount
     +setDeviceOn()
     +setDeviceOff()
+    +createPatient(Qstring, int);
     +setAdultPads()
     +setChildPads()
     +monitorHeart()
@@ -27,7 +28,7 @@ class AED {
 }
 
 class Patient {
-    -string name
+    -QString name
     -int age
     -bool isAlive
     -bool isShockableRhythm
