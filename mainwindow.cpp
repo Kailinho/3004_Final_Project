@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     aed.createPatient("Someone", 18); // First scenario so we can start coding
 
     connect(ui->powerOnButton, SIGNAL(released()), this, SLOT(pressPowerButton()));
+    connect(ui->adultPad1CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
+    connect(ui->adultPad2CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
+    connect(ui->childPad1CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
+    connect(ui->childPad2CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
 }
 
 MainWindow::~MainWindow()
@@ -22,9 +26,19 @@ void MainWindow::pressPowerButton()
     if(aed.getDeviceStatus() == false)
     {
         aed.setDeviceOn();
+        ui->adultPad1CheckBox->setEnabled(true);
+        ui->adultPad2CheckBox->setEnabled(true);
+        ui->childPad1CheckBox->setEnabled(true);
+        ui->childPad2CheckBox->setEnabled(true);
     }
     else
     {
         aed.setDeviceOff();
     }
 }
+
+void MainWindow::applyPads()
+{
+    aed.setPadsStatus(ui->adultPad1CheckBox->isChecked(), ui->adultPad2CheckBox->isChecked(), ui->childPad1CheckBox->isChecked(), ui->childPad2CheckBox->isChecked());
+}
+

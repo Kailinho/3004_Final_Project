@@ -22,5 +22,6 @@ private:
 
 private slots:
     void pressPowerButton();
+    void applyPads();
 };
 #endif // MAINWINDOW_H

@@ -11,19 +11,21 @@ class AED
 public:
     AED();
     ~AED();
+    void createPatient(QString name, int age);
     bool getDeviceStatus();
     void setDeviceOn();
     void setDeviceOff();
-    void createPatient(QString name, int age);
-    void setAdultPads();
-    void setChildPads();
+    void checkIfPadsAreOn();
+    void setPadsStatus(bool adultPad1status, bool adultPad2status, bool childPad1status, bool childPad2status);
     void monitorHeart();
     void deliverShock();
     void cprFeedback();
 private:
     bool deviceStatus;
-    bool areAdultPadsApplied;
-    bool areChildPadsApplied;
+    bool isAdultPad1Applied;
+    bool isAdultPad2Applied;
+    bool isChildPad1Applied;
+    bool isChildPad2Applied;
     int chargeDeliveredCount;
     Patient* patient;
 };

@@ -2,6 +2,8 @@
 
 Patient::Patient(QString name, int age)
 {
+    this->name = name;
+    this->age = age;
     qInfo("Patient %s is %d year(s) old.", qUtf8Printable(name), age);
 }
 
