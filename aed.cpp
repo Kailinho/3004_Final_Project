@@ -25,7 +25,11 @@ bool AED::getDeviceStatus()
 void AED::setDeviceOn()
 {
     deviceStatus = 1;
-    qInfo("The AED has turned ON.");
+    qInfo("AED: Turned ON.");
+    qInfo("AED: Initiating self-test...");
+    QThread::sleep(3);
+    qInfo("AED: Now operational.");
+
 }
 
 void AED::setDeviceOff()

@@ -1,8 +1,9 @@
 #ifndef AED_H
 #define AED_H
 
-#include <QtGlobal>
 #include <QString>
+#include <QtGlobal>
+#include <QThread>
 #include "patient.h"
 
 class AED
