@@ -4,6 +4,7 @@
 AED::AED() : QObject()
 {
     deviceStatus = 0;
+    batteryLevel = 100;
     isAdultPad1Applied = 0;
     isAdultPad2Applied = 0;
     isChildPad1Applied = 0;
@@ -112,6 +113,13 @@ void AED::cprFeedback()
 
 void AED::deliverShock()
 {
+    int chargeNeeded = 20;
+    if(batteryLevel < chargeNeeded)
+    {
+        qInfo("AED: Not enough battery power left to deliver a shock!");
+        return;
+    }
+
     qInfo("AED: Shock advised! Stand clear from the patient!");
     QThread::sleep(1);
     qInfo("AED: Delivering shock in 3");
