@@ -19,9 +19,9 @@ AED::~AED()
     }
 }
 
-void AED::createPatient(QString name, int age)
+void AED::createPatient(QString name, int age, int healthStatus)
 {
-    patient = new Patient(name, age);
+    patient = new Patient(name, age, healthStatus);
 }
 
 bool AED::getDeviceStatus()
