@@ -1,21 +1,44 @@
 #include "patient.h"
 
-map<int, string> Patient::healthCondition = {{0, "Dead"}, {1, "Healthy"}, {2, "V-Fib"}, {3, "V_Tach"}};
+#define STABLE 1
+#define SHOCKABLE 2
+#define NOT_SHOCKABLE 3
+#define DEAD 4
 
-Patient::Patient(QString name, int age, int healthStatus)
-{
-    this->name = name;
-    this->age = age;
-    this->healthStatus = healthStatus;
-    QString healthStatusString = QString::fromStdString(healthCondition.at(healthStatus));
-    qInfo("Patient %s is %d year(s) old. Condition: %s", qUtf8Printable(name), age, qUtf8Printable(healthStatusString));
+int Patient::p_count = 1;
+
+Patient::Patient(bool isAdult, bool shockable, QObject *parent): QObject(parent){
+    num = p_count;
+    p_count++;
+
+    this->isAdult = isAdult;
+
+    if(shockable){
+        status = SHOCKABLE;
+    } else {
+        status = NOT_SHOCKABLE;
+    }
+
+    // This can probably be removed once a dropdown menu has been created with multiple patients
+    if(isAdult){
+        qInfo("Patient %i is an adult.", num);
+    } else {
+        qInfo("Patient %i is a child.", num);
+    }
 }
 
-bool Patient::isAnAdult()
-{
-    if(age >= 18)
-    {
-        return true;
-    }
-    return false;
+Patient::~Patient(){}
+
+//Getters
+bool Patient::getIsAdult(){
+    return isAdult;
+}
+
+int Patient::getStatus(){
+    return status;
+}
+
+//Setters
+void Patient::setStatus(int newStatus){
+    status = newStatus;
 }
