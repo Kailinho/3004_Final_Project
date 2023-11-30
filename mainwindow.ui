@@ -50,12 +50,12 @@ background-color: rgba(255, 255, 255, 0);
      <rect>
       <x>70</x>
       <y>90</y>
-      <width>131</width>
+      <width>101</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Adult Electrode 1</string>
+     <string>Adult Pad 1</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="adultPad2CheckBox">
@@ -66,12 +66,12 @@ background-color: rgba(255, 255, 255, 0);
      <rect>
       <x>620</x>
       <y>90</y>
-      <width>131</width>
+      <width>101</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Adult Electrode 2</string>
+     <string>Adult Pad 2</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="childPad1CheckBox">
@@ -82,12 +82,12 @@ background-color: rgba(255, 255, 255, 0);
      <rect>
       <x>70</x>
       <y>120</y>
-      <width>131</width>
+      <width>101</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Child Electrode 1</string>
+     <string>Child Pad 1</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="childPad2CheckBox">
@@ -98,12 +98,12 @@ background-color: rgba(255, 255, 255, 0);
      <rect>
       <x>620</x>
       <y>120</y>
-      <width>131</width>
+      <width>101</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Child Electrode 2</string>
+     <string>Child Pad 2</string>
     </property>
    </widget>
   </widget>

@@ -34,6 +34,14 @@ void MainWindow::pressPowerButton()
     else
     {
         aed.setDeviceOff();
+        ui->adultPad1CheckBox->setChecked(false);
+        ui->adultPad2CheckBox->setChecked(false);
+        ui->childPad1CheckBox->setChecked(false);
+        ui->childPad2CheckBox->setChecked(false);
+        ui->adultPad1CheckBox->setEnabled(false);
+        ui->adultPad2CheckBox->setEnabled(false);
+        ui->childPad1CheckBox->setEnabled(false);
+        ui->childPad2CheckBox->setEnabled(false);
     }
 }
 
