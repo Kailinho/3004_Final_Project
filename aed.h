@@ -11,7 +11,7 @@ class AED
 public:
     AED();
     ~AED();
-    void createPatient(QString name, int age, int healthStatus);
+    void createPatient(bool isAdult, int status);
     bool getDeviceStatus();
     void setDeviceOn();
     void setDeviceOff();

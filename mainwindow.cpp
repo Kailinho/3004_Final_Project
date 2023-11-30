@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    aed.createPatient("Someone", 18, 2); // First scenario so we can start coding
+    aed.createPatient(true, 2); // First scenario so we can start coding
 
     connect(ui->powerOnButton, SIGNAL(released()), this, SLOT(pressPowerButton()));
     connect(ui->adultPad1CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));

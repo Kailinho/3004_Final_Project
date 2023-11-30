@@ -19,9 +19,9 @@ AED::~AED()
     }
 }
 
-void AED::createPatient(QString name, int age, int healthStatus)
+void AED::createPatient(bool isAdult, int status)
 {
-    patient = new Patient(name, age, healthStatus);
+    patient = new Patient(isAdult, status);
 }
 
 bool AED::getDeviceStatus()
@@ -47,7 +47,7 @@ void AED::setDeviceOff()
 
 void AED::checkIfPadsAreOn()
 {
-    if(patient->isAnAdult())
+    if(patient->getIsAdult())
     {
         if(isChildPad1Applied || isChildPad2Applied)
         {

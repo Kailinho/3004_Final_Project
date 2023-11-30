@@ -1,31 +1,34 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
+#include <map>
 #include <QtGlobal>
 #include <QString>
 #include <QObject>
 
 using namespace std;
 
-class Patient : public QObject{
-
+class Patient : public QObject
+{
     Q_OBJECT
 
     public:
-        //Public static variable
-        static int p_count;
+        // Constructor
+        Patient(bool isAdult, int Status);
 
-        //Constructor/destructor
-        Patient(bool isAdult, bool shockable, QObject *parent = nullptr);
-        ~Patient();
-
-        //Getters
+        // Getters
         bool getIsAdult();
         int getStatus();
 
-        //Setters
+        // Setters
         void setStatus(int newStatus);
+
     private:
+        // Private static variables
+        static map<int, string> statusMap;
+        static int patientCount;
+
+        // Private variables
         int num;
         bool isAdult;
         int status;
