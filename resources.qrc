@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/device.png</file>
-
+	<file>images/power-button.png</file>
     </qresource>
 </RCC>

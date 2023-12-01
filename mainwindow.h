@@ -23,5 +23,6 @@ private:
 private slots:
     void pressPowerButton();
     void applyPads();
+    void updateBatteryLevel(int level);
 };
 #endif // MAINWINDOW_H

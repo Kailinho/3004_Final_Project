@@ -1,5 +1,6 @@
 #include "aed.h"
 
+
 // Constructor
 AED::AED() : QObject()
 {
@@ -11,6 +12,7 @@ AED::AED() : QObject()
     isChildPad2Applied = 0;
     chargeDeliveredCount = 0;
     qInfo("The AED object has been created."); // This line can be removed for the submission
+    updateBatteryStatus();
 }
 
 // Destructor
@@ -28,8 +30,13 @@ bool AED::getDeviceStatus()
     return deviceStatus;
 }
 
+int AED::getBatteryLevel(){
+    return batteryLevel;
+}
+
 void AED::getPadsStatus()
 {
+
     if(patient->getIsAdult())
     {
         if(isChildPad1Applied || isChildPad2Applied)
@@ -78,7 +85,10 @@ void AED::setPadsStatus(bool adultPad1status, bool adultPad2status, bool childPa
     isAdultPad2Applied = adultPad2status;
     isChildPad1Applied = childPad1status;
     isChildPad2Applied = childPad2status;
-    getPadsStatus();
+
+    QTimer::singleShot(500, this, &AED::getPadsStatus); //Delay calling getPadsStatus to give enough time to update the UI, as 2nd CheckBox would not appear to be checked otherwise.
+
+
 }
 
 // Main functions of the AED cycle
@@ -129,10 +139,22 @@ void AED::deliverShock()
     qInfo("AED: 1");
     QThread::sleep(1);
     qInfo("AED: Delivering shock!");
+
     batteryLevel -= 20;
+    updateBatteryStatus();
+
     chargeDeliveredCount += 1;
     monitorHeart();
 }
+
+//Battery Signal
+
+void AED::updateBatteryStatus(){
+    int newLevel = getBatteryLevel();
+    // Emit the signal to notify about the battery level change
+    emit batteryLevelChanged(newLevel);
+}
+
 
 // Other
 void AED::createPatient(bool isAdult, int status)

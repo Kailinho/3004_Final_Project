@@ -5,6 +5,8 @@
 #include <QString>
 #include <QtGlobal>
 #include <QThread>
+#include <QApplication>
+#include <QTimer>
 #include "patient.h"
 
 class AED : public QObject
@@ -21,6 +23,7 @@ public:
     // Getters
     bool getDeviceStatus();
     void getPadsStatus();
+    int getBatteryLevel();
 
     // Setters
     void setDeviceOn();
@@ -34,6 +37,12 @@ public:
 
     // Other
     void createPatient(bool isAdult, int status);
+
+public slots:
+    void updateBatteryStatus();
+
+signals:
+    void batteryLevelChanged(int level);
 
 private:
     // Private variables

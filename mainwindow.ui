@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1097</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>-80</x>
-      <y>40</y>
-      <width>931</width>
-      <height>511</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1101</width>
+      <height>651</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -32,14 +32,24 @@ background-color: rgba(255, 255, 255, 0);
    <widget class="QPushButton" name="powerButton">
     <property name="geometry">
      <rect>
-      <x>348</x>
-      <y>287</y>
-      <width>100</width>
-      <height>25</height>
+      <x>10</x>
+      <y>10</y>
+      <width>61</width>
+      <height>61</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+
+image: url(:/images/power-button.png);
+border-radius: 30px;
+background-color:#D5303D;
+}
+
+</string>
+    </property>
     <property name="text">
-     <string>Power ON/OFF</string>
+     <string/>
     </property>
    </widget>
    <widget class="QCheckBox" name="adultPad1CheckBox">
@@ -48,11 +58,29 @@ background-color: rgba(255, 255, 255, 0);
     </property>
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>90</y>
-      <width>101</width>
-      <height>23</height>
+      <x>10</x>
+      <y>380</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox {
+	background-color: #D5303D;
+    border: 2px solid navy;
+    border-radius: 5px;
+    padding: 5px;
+	color:white;
+    }
+QCheckBox:indicator{
+	border:none;
+}
+QCheckBox:disabled {
+	background-color: #4f060c;
+ }                            
+QCheckBox:checked {
+    background-color: #30D5C8;
+    }</string>
     </property>
     <property name="text">
      <string>Adult Pad 1</string>
@@ -64,11 +92,29 @@ background-color: rgba(255, 255, 255, 0);
     </property>
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>90</y>
-      <width>101</width>
-      <height>23</height>
+      <x>140</x>
+      <y>382</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox {
+	background-color: #D5303D;
+    border: 2px solid navy;
+    border-radius: 5px;
+    padding: 5px;
+	color:white;
+    }
+QCheckBox:indicator{
+	border:none;
+}
+QCheckBox:disabled {
+	background-color: #4f060c;
+ }                            
+QCheckBox:checked {
+    background-color: #30D5C8;
+    }</string>
     </property>
     <property name="text">
      <string>Adult Pad 2</string>
@@ -80,11 +126,29 @@ background-color: rgba(255, 255, 255, 0);
     </property>
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>120</y>
-      <width>101</width>
-      <height>23</height>
+      <x>10</x>
+      <y>430</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox {
+	background-color: #D5303D;
+    border: 2px solid navy;
+    border-radius: 5px;
+    padding: 5px;
+	color:white;
+    }
+QCheckBox:indicator{
+	border:none;
+}
+QCheckBox:disabled {
+	background-color: #4f060c;
+ }                            
+QCheckBox:checked {
+    background-color: #30D5C8;
+    }</string>
     </property>
     <property name="text">
      <string>Child Pad 1</string>
@@ -96,14 +160,49 @@ background-color: rgba(255, 255, 255, 0);
     </property>
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>120</y>
-      <width>101</width>
-      <height>23</height>
+      <x>140</x>
+      <y>430</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox {
+	background-color: #D5303D;
+    border: 2px solid navy;
+    border-radius: 5px;
+    padding: 5px;
+	color:white;
+    }
+QCheckBox:indicator{
+	border:none;
+}
+QCheckBox:disabled {
+	background-color: #4f060c;
+ }                            
+QCheckBox:checked {
+    background-color: #30D5C8;
+    }</string>
     </property>
     <property name="text">
      <string>Child Pad 2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="batteryLabel">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>20</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+font-weight:bold;</string>
+    </property>
+    <property name="text">
+     <string>Battery:</string>
     </property>
    </widget>
   </widget>
