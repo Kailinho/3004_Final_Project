@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QTimer>
 #include "patient.h"
+#include "CPR.h"
 
 class AED : public QObject
 {
@@ -32,7 +33,7 @@ public:
 
     // Main functions of the AED cycle
     void monitorHeart();
-    void cprFeedback();
+    void cprFeedback(int duration);
     void deliverShock();
 
     // Other
@@ -54,6 +55,7 @@ private:
     bool isChildPad1Applied;
     bool isChildPad2Applied;
     int chargeDeliveredCount;
+    CPR cpr;
 };
 
 #endif // AED_H

@@ -16,12 +16,14 @@ CONFIG += c++11
 
 
 SOURCES += \
+    CPR.cpp \
     aed.cpp \
     main.cpp \
     mainwindow.cpp \
     patient.cpp
 
 HEADERS += \
+    CPR.h \
     aed.h \
     mainwindow.h \
     patient.h

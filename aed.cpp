@@ -11,6 +11,7 @@ AED::AED() : QObject()
     isChildPad1Applied = 0;
     isChildPad2Applied = 0;
     chargeDeliveredCount = 0;
+    CPR cpr;
     qInfo("The AED object has been created."); // This line can be removed for the submission
     updateBatteryStatus();
 }
@@ -106,19 +107,20 @@ void AED::monitorHeart()
         break;
     case 2:
         qInfo("AED: The patient is in V-FIB.");
-        cprFeedback();
+        deliverShock();
         break;
     case 3:
         qInfo("AED: The patient is in V-Tach.");
-        cprFeedback();
+        deliverShock();
         break;
     }
 }
 
-void AED::cprFeedback()
+void AED::cprFeedback(int duration)
 {
-    // need to do cpr before delivering a shock
-    deliverShock();
+    patient->setStatus(cpr.startCPR(duration));
+    monitorHeart();
+
 }
 
 void AED::deliverShock()
@@ -144,7 +146,7 @@ void AED::deliverShock()
     updateBatteryStatus();
 
     chargeDeliveredCount += 1;
-    monitorHeart();
+    cprFeedback(5000);//the aed is suppoed to set a time idk how long to set so i just put in 5000ms
 }
 
 //Battery Signal
