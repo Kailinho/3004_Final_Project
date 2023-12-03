@@ -24,5 +24,6 @@ private slots:
     void pressPowerButton();
     void applyPads();
     void updateBatteryLevel(int level);
+    void updateShockCount(int count);
 };
 #endif // MAINWINDOW_H

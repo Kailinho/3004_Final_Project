@@ -1,61 +1,49 @@
 #ifndef AED_H
 #define AED_H
 
-#include <QObject>
 #include <QString>
 #include <QtGlobal>
 #include <QThread>
-#include <QApplication>
-#include <QTimer>
+#include <QObject>
 #include "patient.h"
-#include "CPR.h"
 
-class AED : public QObject
-{
+class AED : public QObject{
+
     Q_OBJECT
 
-public:
-    // Constructor
-    AED();
+    public:
+        //Constructor/deconstructor
+        AED(QObject *parent = nullptr);
+        ~AED();
 
-    // Destructor
-    ~AED();
+        //Getters
+        bool getPower();
+        int getBatteryLevel();
 
-    // Getters
-    bool getDeviceStatus();
-    void getPadsStatus();
-    int getBatteryLevel();
+        //Setters
+        void togglePower();
+        void setPadsStatus(bool adultPad1status, bool adultPad2status, bool childPad1status, bool childPad2status);
 
-    // Setters
-    void setDeviceOn();
-    void setDeviceOff();
-    void setPadsStatus(bool adultPad1status, bool adultPad2status, bool childPad1status, bool childPad2status);
+        // Main functions of the AED cycle
+        void checkPads();
+        void monitorHeart();
+        void deliverShock();
+        void cprFeedback(int duration);
 
-    // Main functions of the AED cycle
-    void monitorHeart();
-    void cprFeedback(int duration);
-    void deliverShock();
+        // Others
+        void createPatient(bool isAdult, int status);
 
-    // Other
-    void createPatient(bool isAdult, int status);
+    signals:
+        void batteryLevelChanged(int level);
+        void shockCountChanged(int shockCount);
 
-public slots:
-    void updateBatteryStatus();
-
-signals:
-    void batteryLevelChanged(int level);
-
-private:
-    // Private variables
-    Patient* patient;
-    bool deviceStatus;
-    int batteryLevel;
-    bool isAdultPad1Applied;
-    bool isAdultPad2Applied;
-    bool isChildPad1Applied;
-    bool isChildPad2Applied;
-    int chargeDeliveredCount;
-    CPR cpr;
+    private:
+        bool isOn;
+        QPair <bool, bool> adultPads;
+        QPair <bool, bool> childPads;
+        int batteryLevel;
+        int shockCount;
+        Patient* patient;
 };
 
 #endif // AED_H

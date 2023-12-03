@@ -1,57 +1,35 @@
-#include "CPR.h"
+#include "cpr.h"
 
-CPR::CPR(QObject* parent) : QObject(parent) {}
+void RandomCPR(int duration){
+   QElapsedTimer timer;
+   timer.start();
 
-void CPR::RandomCPR(int duration)
-{
-    // Set the upper bound for the random number
-    int r = 3;
+   while (timer.elapsed() <= duration) {
+       int randomNumber = QRandomGenerator::global()->bounded(1, 10);
 
-    // Generate a random number between 1 and r
+       qInfo("User: *Push*");
 
-       QElapsedTimer timer;
-       timer.start();
-
-       while (timer.elapsed() <= duration) {
-           int randomNumber = QRandomGenerator::global()->bounded(1, r + 1);
-           if (randomNumber == 1)
-                pushHarder();
-           if (randomNumber == 2)
-                continueCPR();
-           if (randomNumber == 3)
-                 goodCompressions();
-           QThread::msleep(500);
+       if (randomNumber == 1){
+            qInfo("AED: PUSH HARDER");
+            QThread::msleep(600);
+            qInfo("User: *Push*");
+            qInfo("AED: GOOD COMPRESSIONS");
+       } else if (randomNumber == 2){
+            qInfo("AED: CONTINUE CPR");
+       } else if (randomNumber == 3){
+             qInfo("AED: FULLY RELEASE");
        }
-       goodCompressions();
+
+       QThread::msleep(600);
+   }
 
 }
 
-int CPR::startCPR(int duration)
-{
-    qInfo("Start CPR");
+int startCPR(int duration){
+    qInfo("AED: Start CPR");
+    QThread::sleep(1);
     RandomCPR(duration);
-    stopCPR();
-    int r = 3;
-    int randomNumber = QRandomGenerator::global()->bounded(1, r + 1);
-    return randomNumber;
-}
-
-void CPR::continueCPR()
-{
-    qInfo("Continue CPR");
-}
-
-void CPR::pushHarder()
-{
-    qInfo("PUSH HARDER");
-}
-
-void CPR::goodCompressions()
-{
-    qInfo("GOOD COMPRESSIONS");
-}
-
-void CPR::stopCPR()
-{
-    qInfo("STOP CPR to analyse heart");
+    qInfo("AED: STOP CPR");
+    QThread::sleep(1);
+    return QRandomGenerator::global()->bounded(0, 3);
 }

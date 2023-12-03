@@ -40,10 +40,9 @@ background-color: rgba(255, 255, 255, 0);
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-
 image: url(:/images/power-button.png);
 border-radius: 30px;
-background-color:#D5303D;
+background-color:rgb(237, 51, 59);
 }
 
 </string>
@@ -66,18 +65,18 @@ background-color:#D5303D;
     </property>
     <property name="styleSheet">
      <string notr="true">QCheckBox {
-	background-color: #D5303D;
+        background-color: #D5303D;
     border: 2px solid navy;
     border-radius: 5px;
     padding: 5px;
-	color:white;
+        color:white;
     }
 QCheckBox:indicator{
-	border:none;
+        border:none;
 }
 QCheckBox:disabled {
-	background-color: #4f060c;
- }                            
+        background-color: #4f060c;
+ }
 QCheckBox:checked {
     background-color: #30D5C8;
     }</string>
@@ -93,25 +92,25 @@ QCheckBox:checked {
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>382</y>
+      <y>380</y>
       <width>111</width>
       <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QCheckBox {
-	background-color: #D5303D;
+        background-color: #D5303D;
     border: 2px solid navy;
     border-radius: 5px;
     padding: 5px;
-	color:white;
+        color:white;
     }
 QCheckBox:indicator{
-	border:none;
+        border:none;
 }
 QCheckBox:disabled {
-	background-color: #4f060c;
- }                            
+        background-color: #4f060c;
+ }
 QCheckBox:checked {
     background-color: #30D5C8;
     }</string>
@@ -134,18 +133,18 @@ QCheckBox:checked {
     </property>
     <property name="styleSheet">
      <string notr="true">QCheckBox {
-	background-color: #D5303D;
+        background-color: #D5303D;
     border: 2px solid navy;
     border-radius: 5px;
     padding: 5px;
-	color:white;
+        color:white;
     }
 QCheckBox:indicator{
-	border:none;
+        border:none;
 }
 QCheckBox:disabled {
-	background-color: #4f060c;
- }                            
+        background-color: #4f060c;
+ }
 QCheckBox:checked {
     background-color: #30D5C8;
     }</string>
@@ -168,18 +167,18 @@ QCheckBox:checked {
     </property>
     <property name="styleSheet">
      <string notr="true">QCheckBox {
-	background-color: #D5303D;
+        background-color: #D5303D;
     border: 2px solid navy;
     border-radius: 5px;
     padding: 5px;
-	color:white;
+        color:white;
     }
 QCheckBox:indicator{
-	border:none;
+        border:none;
 }
 QCheckBox:disabled {
-	background-color: #4f060c;
- }                            
+        background-color: #4f060c;
+ }
 QCheckBox:checked {
     background-color: #30D5C8;
     }</string>
@@ -203,6 +202,19 @@ font-weight:bold;</string>
     </property>
     <property name="text">
      <string>Battery:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="shockLabel">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>220</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string># of Shocks: 0</string>
     </property>
    </widget>
   </widget>

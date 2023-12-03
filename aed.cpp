@@ -1,24 +1,22 @@
 #include "aed.h"
+#include "cpr.h"
 
+#define DEAD 0
+#define STABLE 1
+#define V_FIB 2
+#define V_TACH 3
 
-// Constructor
-AED::AED() : QObject()
-{
-    deviceStatus = 0;
+AED::AED(QObject *parent) : QObject(parent){
+    isOn = false;
+    adultPads = qMakePair(false, false);
+    childPads = qMakePair(false, false);
     batteryLevel = 100;
-    isAdultPad1Applied = 0;
-    isAdultPad2Applied = 0;
-    isChildPad1Applied = 0;
-    isChildPad2Applied = 0;
-    chargeDeliveredCount = 0;
-    CPR cpr;
+    shockCount = 0;
+
     qInfo("The AED object has been created."); // This line can be removed for the submission
-    updateBatteryStatus();
 }
 
-// Destructor
-AED::~AED()
-{
+AED::~AED(){
     if(patient == nullptr)
     {
         delete patient;
@@ -26,139 +24,147 @@ AED::~AED()
 }
 
 // Getters
-bool AED::getDeviceStatus()
+bool AED::getPower()
 {
-    return deviceStatus;
+    return isOn;
 }
 
 int AED::getBatteryLevel(){
     return batteryLevel;
 }
 
-void AED::getPadsStatus()
-{
+// Setters
 
-    if(patient->getIsAdult())
-    {
-        if(isChildPad1Applied || isChildPad2Applied)
-        {
-            qInfo("AED: Please remove the child pads from the adult patient.");
+void AED::togglePower()
+{
+    if(isOn){
+        isOn = false;
+        batteryLevel = 100;
+        shockCount = 0;
+        emit shockCountChanged(shockCount);
+        qInfo("The AED has turned OFF.");
+    } else {
+        isOn = true;
+        emit batteryLevelChanged(batteryLevel);
+        qInfo("AED: INITIATING SELF TEST");
+        QThread::sleep(3);
+        qInfo("AED: UNIT OK");
+        QThread::sleep(1);
+
+        //Pre-CPR Procedure (We might not need this, could remove)
+        qInfo("AED: STAY CALM");
+        QThread::sleep(1);
+        qInfo("AED: CHECK RESPONSIVENESS");
+        QThread::sleep(1);
+        qInfo("AED: CALL FOR HELP");
+        QThread::sleep(1);
+
+        qInfo("AED: ATTACH DEFIB PADS TO PATIENT’S BARE CHEST.");
+        QThread::sleep(1);
+    }
+
+}
+
+void AED::setPadsStatus(bool adultPad1, bool adultPad2, bool childPad1, bool childPad2)
+{
+    adultPads = qMakePair(adultPad1, adultPad2);
+    childPads = qMakePair(childPad1, childPad2);
+    QTimer::singleShot(500, this, &AED::checkPads);
+}
+
+void AED::checkPads()
+{
+    if(patient->getIsAdult()){
+        if(childPads.first || childPads.second){
+            qInfo("AED: CHECK ELECTRODE PADS");
         }
-        else if(isAdultPad1Applied && isAdultPad2Applied)
-        {
+        else if(adultPads.first && adultPads.second){
+            qInfo("AED: ADULT PADS");
+            QThread::sleep(1);
             monitorHeart();
         }
     }
     else
     {
-        if(isAdultPad1Applied || isAdultPad2Applied)
-        {
-            qInfo("AED: Please remove the adult pads from the child patient.");
+        if(adultPads.first || adultPads.second){
+            qInfo("AED: CHECK ELECTRODE PADS");
         }
-        else if(isChildPad1Applied && isChildPad2Applied)
-        {
+        else if(childPads.first && childPads.second){
+            qInfo("AED: PEDIATRIC PADS");
+            QThread::sleep(1);
             monitorHeart();
         }
     }
 }
 
-// Setters
-void AED::setDeviceOn()
-{
-    deviceStatus = 1;
-    qInfo("AED: Turned ON.");
-    qInfo("AED: Initiating self-test...");
+void AED::monitorHeart(){
+    qInfo("AED: DON’T TOUCH PATIENT, ANALYZING");
     QThread::sleep(3);
-    qInfo("AED: Now operational.");
-    qInfo("AED: Please place the set of electrode pads on the patient's bare chest.");
-}
-
-void AED::setDeviceOff()
-{
-    deviceStatus = 0;
-    qInfo("AED: Turned OFF.");
-    qInfo("The pads have been removed.");
-}
-
-void AED::setPadsStatus(bool adultPad1status, bool adultPad2status, bool childPad1status, bool childPad2status)
-{
-    isAdultPad1Applied = adultPad1status;
-    isAdultPad2Applied = adultPad2status;
-    isChildPad1Applied = childPad1status;
-    isChildPad2Applied = childPad2status;
-
-    QTimer::singleShot(500, this, &AED::getPadsStatus); //Delay calling getPadsStatus to give enough time to update the UI, as 2nd CheckBox would not appear to be checked otherwise.
-
-
-}
-
-// Main functions of the AED cycle
-void AED::monitorHeart()
-{
-    qInfo("AED: Monitoring the patient's health...");
-    QThread::sleep(3);
-    switch(patient->getStatus())
-    {
-    case 0:
-        qInfo("AED: The patient has flatlined.");
+    switch(patient->getStatus()){
+    case DEAD:
+        qInfo("AED: The patient has flatlined."); //Might change
         break;
-    case 1:
-        qInfo("AED: The patient is stable.");
+    case STABLE:
+        qInfo("AED: PATIENT STABLE");
         break;
-    case 2:
-        qInfo("AED: The patient is in V-FIB.");
+    case V_FIB:
+        qInfo("Graph: The patient is in V-FIB.");
+        QThread::sleep(1);
+        qInfo("AED: SHOCK ADVISED");
+        QThread::sleep(1);
         deliverShock();
         break;
-    case 3:
-        qInfo("AED: The patient is in V-Tach.");
+    case V_TACH:
+        qInfo("Graph: The patient is in V-Tach.");
+        QThread::sleep(1);
+        qInfo("AED: SHOCK ADVISED");
+        QThread::sleep(1);
         deliverShock();
         break;
     }
 }
 
-void AED::cprFeedback(int duration)
-{
-    patient->setStatus(cpr.startCPR(duration));
-    monitorHeart();
-
-}
-
-void AED::deliverShock()
-{
-    int chargeNeeded = 20;
-    if(batteryLevel < chargeNeeded)
-    {
-        qInfo("AED: Not enough battery power left to deliver a shock!");
+void AED::deliverShock(){
+    int chargeNeeded = 10;
+    if(batteryLevel < chargeNeeded){
+        qInfo("AED: CHANGE BATTERIES");
         return;
     }
 
-    qInfo("AED: Shock advised! Stand clear from the patient!");
+    qInfo("AED: STAND CLEAR");
     QThread::sleep(1);
-    qInfo("AED: Delivering shock in 3");
+    qInfo("AED: SHOCK WILL BE DELIVERED IN THREE");
     QThread::sleep(1);
-    qInfo("AED: 2");
+    qInfo("AED: TWO");
     QThread::sleep(1);
-    qInfo("AED: 1");
+    qInfo("AED: ONE");
     QThread::sleep(1);
-    qInfo("AED: Delivering shock!");
+    qInfo("AED: SHOCK DELIVERED");
 
     batteryLevel -= 20;
-    updateBatteryStatus();
+    emit batteryLevelChanged(batteryLevel);
 
-    chargeDeliveredCount += 1;
-    cprFeedback(5000);//the aed is suppoed to set a time idk how long to set so i just put in 5000ms
+    shockCount += 1;
+    emit shockCountChanged(shockCount);
+    cprFeedback(10000);// The real default time is 2 minutes - be sure the TA marking us knows we shortened the time for testing purposes
 }
 
-//Battery Signal
-
-void AED::updateBatteryStatus(){
-    int newLevel = getBatteryLevel();
-    // Emit the signal to notify about the battery level change
-    emit batteryLevelChanged(newLevel);
+void AED::cprFeedback(int duration){
+    switch(startCPR(duration)){
+        case 0:
+            patient->setStatus(DEAD);
+            break;
+        case 1:
+            patient->setStatus(STABLE);
+            break;
+        default:
+            break;
+    }
+    monitorHeart();
 }
 
+// Others
 
-// Other
 void AED::createPatient(bool isAdult, int status)
 {
     patient = new Patient(isAdult, status);

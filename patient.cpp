@@ -1,40 +1,34 @@
 #include "patient.h"
 
-// Static variables
-map<int, string> statusMap = {{0, "Dead"}, {1, "Stable"}, {2, "V-Fib"}, {3, "V-Tach"}};
+int Patient::p_count = 1;
 
-int Patient::patientCount = 0;
+Patient::Patient(bool isAdult, int status, QObject *parent): QObject(parent){
+    num = p_count;
+    p_count++;
 
-// Constructor
-Patient::Patient(bool isAdult, int status) : QObject()
-{
-    num = patientCount++;
     this->isAdult = isAdult;
     this->status = status;
 
-    if(isAdult)
-    {
+    // This can probably be removed once a dropdown menu has been created with multiple patients
+    if(isAdult){
         qInfo("Patient %i is an adult.", num);
-    }
-    else
-    {
+    } else {
         qInfo("Patient %i is a child.", num);
     }
 }
 
+Patient::~Patient(){}
+
 //Getters
-bool Patient::getIsAdult()
-{
+bool Patient::getIsAdult(){
     return isAdult;
 }
 
-int Patient::getStatus()
-{
+int Patient::getStatus(){
     return status;
 }
 
 //Setters
-void Patient::setStatus(int newStatus)
-{
+void Patient::setStatus(int newStatus){
     status = newStatus;
 }
