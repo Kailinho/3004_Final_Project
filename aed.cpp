@@ -1,5 +1,5 @@
 #include "aed.h"
-#include "cpr.h"
+#include "CPR.h"
 
 #define DEAD 0
 #define STABLE 1
@@ -42,6 +42,7 @@ void AED::togglePower()
         batteryLevel = 100;
         shockCount = 0;
         emit shockCountChanged(shockCount);
+        emit displayHRSignal(6);
         qInfo("The AED has turned OFF.");
     } else {
         isOn = true;
@@ -102,12 +103,16 @@ void AED::monitorHeart(){
     QThread::sleep(3);
     switch(patient->getStatus()){
     case DEAD:
+        emit displayHRSignal(1);
         qInfo("AED: The patient has flatlined."); //Might change
         break;
     case STABLE:
+        emit displayHRSignal(2);
         qInfo("AED: PATIENT STABLE");
         break;
     case V_FIB:
+        emit displayHRSignal(3);
+        QCoreApplication::processEvents();
         qInfo("Graph: The patient is in V-FIB.");
         QThread::sleep(1);
         qInfo("AED: SHOCK ADVISED");
@@ -115,6 +120,8 @@ void AED::monitorHeart(){
         deliverShock();
         break;
     case V_TACH:
+        emit displayHRSignal(4);
+        QCoreApplication::processEvents();
         qInfo("Graph: The patient is in V-Tach.");
         QThread::sleep(1);
         qInfo("AED: SHOCK ADVISED");
@@ -169,3 +176,4 @@ void AED::createPatient(bool isAdult, int status)
 {
     patient = new Patient(isAdult, status);
 }
+

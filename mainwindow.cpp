@@ -7,6 +7,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     aed.createPatient(true, 3); // First scenario so we can start coding
 
+    imageLabel = new QLabel(this);
+    imageLabel->resize(200, 48);
+    imageLabel->move(463, 170);
+    imageLabel->raise();
+    imageLabel->setStyleSheet("background-color: black;");
+
     connect(&aed, SIGNAL(batteryLevelChanged(int)), this, SLOT(updateBatteryLevel(int)));
     connect(&aed, SIGNAL(shockCountChanged(int)), this, SLOT(updateShockCount(int)));
     connect(ui->powerButton, SIGNAL(released()), this, SLOT(pressPowerButton()));
@@ -14,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->adultPad2CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
     connect(ui->childPad1CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
     connect(ui->childPad2CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
+    connect(&aed, SIGNAL(displayHRSignal(int)), this, SLOT(displayHR(int)));
 }
 
 MainWindow::~MainWindow()
@@ -66,4 +73,38 @@ void MainWindow::updateBatteryLevel(int level) {
 void MainWindow::updateShockCount(int count) {
     ui->shockLabel->setText("# of Shocks: " + QString::number(count));
     QApplication::processEvents(); //Force UI updates
+}
+
+void MainWindow::displayHR(int status) {
+    QPixmap originalImage;
+
+    // Update the image based on the status
+    switch (status) {
+        case 1:
+            originalImage.load(":/images/asys.jpg");
+            break;
+        case 2:
+            originalImage.load(":/images/stable.jpg");
+            break;
+        case 3:
+            originalImage.load(":/images/vfib.jpg");
+            break;
+        case 4:
+            originalImage.load(":/images/vtach.jpg");
+            break;
+        case 5:
+            originalImage.load(":/images/pea.jpg");
+            break;
+        case 6:
+            originalImage.load(":/images/black.jpg");
+        default:
+            break;
+    }
+
+    // Resize and set the image
+    QPixmap resizedImage = originalImage.scaled(200, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    imageLabel->setPixmap(resizedImage);
+
+    // Show the QLabel
+    imageLabel->show();
 }

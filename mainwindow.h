@@ -19,11 +19,13 @@ public:
 private:
     Ui::MainWindow *ui;
     AED aed;
+    QLabel *imageLabel;
 
 private slots:
     void pressPowerButton();
     void applyPads();
     void updateBatteryLevel(int level);
     void updateShockCount(int count);
+    void displayHR(int status);
 };
 #endif // MAINWINDOW_H

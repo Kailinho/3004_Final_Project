@@ -5,6 +5,8 @@
 #include <QtGlobal>
 #include <QThread>
 #include <QObject>
+#include <QLabel>
+#include <QPixmap>
 #include "patient.h"
 
 class AED : public QObject{
@@ -33,9 +35,11 @@ class AED : public QObject{
         // Others
         void createPatient(bool isAdult, int status);
 
+
     signals:
         void batteryLevelChanged(int level);
         void shockCountChanged(int shockCount);
+        void displayHRSignal(int status);
 
     private:
         bool isOn;
