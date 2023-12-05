@@ -24,8 +24,7 @@ AED::~AED(){
 }
 
 // Getters
-bool AED::getPower()
-{
+bool AED::getPower(){
     return isOn;
 }
 
@@ -35,8 +34,7 @@ int AED::getBatteryLevel(){
 
 // Setters
 
-void AED::togglePower()
-{
+void AED::togglePower(){
     if(isOn){
         isOn = false;
         batteryLevel = 100;
@@ -63,18 +61,15 @@ void AED::togglePower()
         qInfo("AED: ATTACH DEFIB PADS TO PATIENT’S BARE CHEST.");
         QThread::sleep(1);
     }
-
 }
 
-void AED::setPadsStatus(bool adultPad1, bool adultPad2, bool childPad1, bool childPad2)
-{
+void AED::setPadsStatus(bool adultPad1, bool adultPad2, bool childPad1, bool childPad2){
     adultPads = qMakePair(adultPad1, adultPad2);
     childPads = qMakePair(childPad1, childPad2);
     QTimer::singleShot(500, this, &AED::checkPads);
 }
 
-void AED::checkPads()
-{
+void AED::checkPads(){
     if(patient->getIsAdult()){
         if(childPads.first || childPads.second){
             qInfo("AED: CHECK ELECTRODE PADS");
@@ -172,8 +167,7 @@ void AED::cprFeedback(int duration){
 
 // Others
 
-void AED::createPatient(bool isAdult, int status)
-{
+void AED::createPatient(bool isAdult, int status){
     patient = new Patient(isAdult, status);
 }
 

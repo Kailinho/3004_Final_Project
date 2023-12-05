@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "aed.h"
+#include <QRandomGenerator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,5 +28,6 @@ private slots:
     void updateBatteryLevel(int level);
     void updateShockCount(int count);
     void displayHR(int status);
+    void initializePatient();
 };
 #endif // MAINWINDOW_H

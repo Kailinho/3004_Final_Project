@@ -1,12 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QInputDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     ui->batteryLabel->setText("Battery Level: Initializing");
-
-    aed.createPatient(true, 3); // First scenario so we can start coding
-
+    ui->powerButton->setCursor(Qt::PointingHandCursor);
     imageLabel = new QLabel(this);
     imageLabel->resize(200, 48);
     imageLabel->move(463, 170);
@@ -28,12 +28,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::pressPowerButton(){
-    if(aed.getPower()){
-        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(237, 51, 59);}"); 
-    }
-    else{
-        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(51, 209, 122);}");
+void MainWindow::pressPowerButton() {
+
+    if (aed.getPower()) {
+        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(237, 51, 59);}");
+    } else {
+        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(51, 209, 122);}");       
+        initializePatient();//Initialize patient when the device is turned on
     }
 
     aed.togglePower();
@@ -60,24 +61,44 @@ void MainWindow::pressPowerButton(){
     }
 }
 
-void MainWindow::applyPads()
-{
+void MainWindow::applyPads(){
     aed.setPadsStatus(ui->adultPad1CheckBox->isChecked(), ui->adultPad2CheckBox->isChecked(), ui->childPad1CheckBox->isChecked(), ui->childPad2CheckBox->isChecked());
 }
 
-void MainWindow::updateBatteryLevel(int level) {
+void MainWindow::updateBatteryLevel(int level){
     ui->batteryLabel->setText("Battery Level: " + QString::number(level) + "%");
     QApplication::processEvents(); //Force UI updates
 }
 
-void MainWindow::updateShockCount(int count) {
+void MainWindow::updateShockCount(int count){
     ui->shockLabel->setText("# of Shocks: " + QString::number(count));
     QApplication::processEvents(); //Force UI updates
 }
 
-void MainWindow::displayHR(int status) {
-    QPixmap originalImage;
+void MainWindow::initializePatient(){
+    bool isAdult = true;
+    QStringList choices;
+    choices << "Adult" << "Child";
+    QString choice = QInputDialog::getItem(this, "Patient Type", "Select Patient Type", choices, 0, false);
 
+    // Check the user's choice
+    if (choice == "Adult") {
+        isAdult = true;
+    } else if (choice == "Child") {
+        isAdult = false;
+    } else {
+        qInfo("No Patient Type Selected. Please Restart the Device.");
+        QApplication::quit();
+//        return;
+    }
+
+    //Create the patient with chosen type
+    int randomScenario = QRandomGenerator::global()->bounded(3, 4);
+    aed.createPatient(isAdult, randomScenario);
+}
+
+void MainWindow::displayHR(int status){
+    QPixmap originalImage;
     // Update the image based on the status
     switch (status) {
         case 1:
@@ -100,7 +121,6 @@ void MainWindow::displayHR(int status) {
         default:
             break;
     }
-
     // Resize and set the image
     QPixmap resizedImage = originalImage.scaled(200, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     imageLabel->setPixmap(resizedImage);
