@@ -5,34 +5,46 @@ Class Diagram
 ```mermaid
 classDiagram
 class MainWindow {
-    -int cprLevel
-    +pressPowerButton()
-    +applyAdultPads()
-    +applyChildPads()
-    +applyChestCompression()
+    -QLabel *imageLabel
+
+    -pressPowerButton()
+    -applyPads()
+    -updateBatteryLevel()
+    -updateShockCount()
+    -displayHR(int)
+    -initializePatient()
 }
 
 class AED {
-    -bool deviceStatus
-    -bool areAdultPadsApplied
-    -bool areChildPadsApplied
-    -int chargeDeliveredCount
-    +setDeviceOn()
-    +setDeviceOff()
-    +createPatient(Qstring, int);
-    +setAdultPads()
-    +setChildPads()
+    -bool isOn
+    -QPair&lt;bool, bool&gt;adultPads
+    -QPair&lt;bool, bool&gt;childPads
+    -int batteryLevel
+    -int shockCount
+
+    +getPower() bool
+    +getBatteryLevel() bool
+    +togglePower()
+    +setPadsStatus(bool, bool, bool, bool)
+    +checkPads()
     +monitorHeart()
     +deliverShock()
-    +cprFeedback()
+    +cprFeedback(int)
+    +createPatient()
+
+    +batteryLevelChanged(int)
+    +shockCountChanged(int)
+    +displayHRSignal(int)
 }
 
 class Patient {
-    -QString name
-    -int age
-    -bool isAlive
-    -bool isShockableRhythm
-    -int chestCompressionLevelNeeded
+    -int num
+    -bool isAdult
+    -int status
+
+    +getIsAdult() bool
+    +getstatus() int
+    +setStatus(int)
 }
 
 MainWindow "1" --> "1" AED
