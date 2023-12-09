@@ -17,6 +17,7 @@ CONFIG += c++11
 
 SOURCES += \
     CPR.cpp \
+    CustomDialog.cpp \
     aed.cpp \
     main.cpp \
     mainwindow.cpp \

@@ -66,7 +66,17 @@ void MainWindow::applyPads(){
 }
 
 void MainWindow::updateBatteryLevel(int level){
+
+    // Adjust the color based on the battery level
+    QString textColor;
+    if (level <= 20) {
+        textColor = "red";  // Change to your desired color
+    } else if(level <= 60) {
+        textColor = "white";  // Change to your default color
+    }
     ui->batteryLabel->setText("Battery Level: " + QString::number(level) + "%");
+    // Update the stylesheet
+    ui->batteryLabel->setStyleSheet(QString("QLabel { color: %1; }").arg(textColor));
     QApplication::processEvents(); //Force UI updates
 }
 
@@ -75,27 +85,10 @@ void MainWindow::updateShockCount(int count){
     QApplication::processEvents(); //Force UI updates
 }
 
-void MainWindow::initializePatient(){
-    bool isAdult = true;
-    QStringList choices;
-    choices << "Adult" << "Child";
-    QString choice = QInputDialog::getItem(this, "Patient Type", "Select Patient Type", choices, 0, false);
 
-    // Check the user's choice
-    if (choice == "Adult") {
-        isAdult = true;
-    } else if (choice == "Child") {
-        isAdult = false;
-    } else {
-        qInfo("No Patient Type Selected. Please Restart the Device.");
-        QApplication::quit();
-//        return;
-    }
 
-    //Create the patient with chosen type
-    int randomScenario = QRandomGenerator::global()->bounded(3, 4);
-    aed.createPatient(isAdult, randomScenario);
-}
+
+
 
 void MainWindow::displayHR(int status){
     QPixmap originalImage;
