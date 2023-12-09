@@ -25,6 +25,24 @@ There was a lot of collaboration on the code, especially towards the end. But th
 - AED Functionality: Mathew + Annie
 - Final Touches: Thara + Kailash
 
+
+
+File Organization
+The submission folder consists of two sub-directories.
+ - Design Documents: Contains all design documents for this project. File names reflect the contents.
+ - 3004_Final_Project: Project Source Code.
+    Images folder containing visual assets for the application.
+	Source & Header Files: aed.ccp/h, CPR.cpp/h, mainwindow.cpp/h/ui,main.cpp, patient.cpp/h, resources.qrc and QT .pro file.
+
+
+
+Installation, Setup and Instructions for Use.
+- Open the 3004_Final_Project folder or the .pro file in QT.
+- Build and Run the app in QT.
+- Turn the device On/Off
+    Press the power button.
+
+
 Class Diagram
 ```mermaid
 classDiagram
