@@ -22,7 +22,7 @@ public:
 
         connect(okButton, &QPushButton::clicked, this, &CustomDialog::accept);
         // Set a fixed size
-        setFixedSize(200, 100);
+        setFixedSize(150, 100);
 
         // Center the dialog on the main window
         centerOnMainWindow();
@@ -39,6 +39,7 @@ private:
 
 void MainWindow::initializePatient() {
     CustomDialog dialog(this);
+    dialog.move(25,100);
     if (dialog.exec() == QDialog::Accepted) {
         QString choice = "Adult"; // Default choice
         // Retrieve the selected patient type from the custom dialog

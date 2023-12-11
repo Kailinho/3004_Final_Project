@@ -80,9 +80,11 @@ void MainWindow::updateBatteryLevel(int level){
     // Adjust the color based on the battery level
     QString textColor;
     if (level <= 20) {
-        textColor = "red";  // Change to your desired color
+        textColor = "red";
     } else if(level <= 60) {
-        textColor = "white";  // Change to your default color
+        textColor = "orange";
+    }else{
+        textColor = "white";
     }
     ui->batteryLabel->setText("Battery Level: " + QString::number(level) + "%");
     // Update the stylesheet
