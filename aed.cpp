@@ -1,3 +1,4 @@
+
 #include "aed.h"
 #include "CPR.h"
 
@@ -128,6 +129,9 @@ void AED::monitorHeart(){
 
 void AED::deliverShock(){
     int chargeNeeded = 10;
+    if (batteryLevel<=20){
+        qInfo("AED: Low Battery Warning. This is the last shock the AED can generate before the batteries are replaced.");
+    }
     if(batteryLevel < chargeNeeded){
         qInfo("AED: CHANGE BATTERIES");
         return;
@@ -152,15 +156,17 @@ void AED::deliverShock(){
 }
 
 void AED::cprFeedback(int duration){
-    switch(startCPR(duration)){
-        case 0:
-            patient->setStatus(DEAD);
-            break;
-        case 1:
-            patient->setStatus(STABLE);
-            break;
-        default:
-            break;
+    emit enableButton(true);
+    QCoreApplication::processEvents();
+    switch(startCPR(this,duration)){
+    case 0:
+        patient->setStatus(DEAD);
+        break;
+    case 1:
+        patient->setStatus(STABLE);
+        break;
+    default:
+        break;
     }
     monitorHeart();
 }
@@ -169,5 +175,19 @@ void AED::cprFeedback(int duration){
 
 void AED::createPatient(bool isAdult, int status){
     patient = new Patient(isAdult, status);
+}
+
+void AED::badCPRClicked(){
+    pushHarder(this);
+}
+void AED::okCPRClicked(){
+    continueCPR(this);
+}
+
+void AED::goodCPRClicked(){
+    goodCompressions(this);
+}
+void AED::releaseClicked(){
+    Release(this);
 }
 

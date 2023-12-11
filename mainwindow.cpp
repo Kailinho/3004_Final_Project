@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     imageLabel->raise();
     imageLabel->setStyleSheet("background-color: black;");
 
+    imageLabelCPR = new QLabel(this);
+    imageLabelCPR->move(470, 230);
+    buttonEnable(false);
     connect(&aed, SIGNAL(batteryLevelChanged(int)), this, SLOT(updateBatteryLevel(int)));
     connect(&aed, SIGNAL(shockCountChanged(int)), this, SLOT(updateShockCount(int)));
     connect(ui->powerButton, SIGNAL(released()), this, SLOT(pressPowerButton()));
@@ -21,6 +24,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->childPad1CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
     connect(ui->childPad2CheckBox, SIGNAL(stateChanged(int)), this, SLOT(applyPads()));
     connect(&aed, SIGNAL(displayHRSignal(int)), this, SLOT(displayHR(int)));
+    connect(&aed, SIGNAL(displayCompressionsSignal(int)), this, SLOT(displayCompressions(int)));
+    connect(&aed, SIGNAL(enableButton(bool)), this, SLOT(buttonEnable(bool)));
+    connect(this, SIGNAL(badCPR()), &aed, SLOT(badCPRClicked()));
+    connect(this, SIGNAL(okCPR()), &aed, SLOT(okCPRClicked()));
+    connect(this, SIGNAL(goodCPR()), &aed, SLOT(goodCPRClicked()));
+    connect(this, SIGNAL(Release()), &aed, SLOT(releaseClicked()));
+
 }
 
 MainWindow::~MainWindow()
@@ -121,3 +131,56 @@ void MainWindow::displayHR(int status){
     // Show the QLabel
     imageLabel->show();
 }
+void MainWindow::displayCompressions(int quality){
+    imageLabelCPR->raise();
+    if (quality==1){
+        imageLabelCPR->resize(20, 5);
+        imageLabelCPR->setStyleSheet("background-color: red;");
+    }
+    else if (quality==2) {
+        imageLabelCPR->resize(35, 5);
+        imageLabelCPR->setStyleSheet("background-color: yellow;");
+    }
+    else if(quality==4){
+        imageLabelCPR->resize(75, 5);
+        imageLabelCPR->setStyleSheet("background-color: blue;");
+    }
+    else if(quality==0){
+        imageLabelCPR->setStyleSheet("background-color: transparent;");
+    }
+    else{
+        imageLabelCPR->resize(55, 5);
+        imageLabelCPR->setStyleSheet("background-color: green;");
+    }
+    imageLabelCPR->show();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    emit badCPR();
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    emit okCPR();
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    emit goodCPR();
+}
+
+void MainWindow::buttonEnable(bool value){
+    ui->pushButton->setEnabled(value);
+    ui->pushButton_2->setEnabled(value);
+    ui->pushButton_3->setEnabled(value);
+    ui->pushButton_4->setEnabled(value);
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    emit Release();
+}
+

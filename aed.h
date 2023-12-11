@@ -40,6 +40,13 @@ class AED : public QObject{
         void batteryLevelChanged(int level);
         void shockCountChanged(int shockCount);
         void displayHRSignal(int status);
+        void displayCompressionsSignal(int quality);
+        void enableButton(bool value);
+   public slots:
+        void badCPRClicked();
+        void okCPRClicked();
+        void goodCPRClicked();
+        void releaseClicked();
 
     private:
         bool isOn;

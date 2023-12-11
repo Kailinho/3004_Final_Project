@@ -5,31 +5,52 @@ void RandomCPR(int duration){
    timer.start();
 
    while (timer.elapsed() <= duration) {
-       int randomNumber = QRandomGenerator::global()->bounded(1, 10);
 
-       qInfo("User: *Push*");
-
-       if (randomNumber == 1){
-            qInfo("AED: PUSH HARDER");
-            QThread::msleep(600);
-            qInfo("User: *Push*");
-            qInfo("AED: GOOD COMPRESSIONS");
-       } else if (randomNumber == 2){
-            qInfo("AED: CONTINUE CPR");
-       } else if (randomNumber == 3){
-             qInfo("AED: FULLY RELEASE");
-       }
-
-       QThread::msleep(600);
+       qInfo("User:*Push*");
+       QCoreApplication::processEvents();
+       QThread::msleep(800);
    }
-
 }
 
-int startCPR(int duration){
+int startCPR(AED *aed, int duration){
     qInfo("AED: Start CPR");
     QThread::sleep(1);
-    RandomCPR(duration);
+    RandomCPR( duration);
+    emit aed->enableButton(false);
+    QCoreApplication::processEvents();
     qInfo("AED: STOP CPR");
+    updateAED(aed,0);
+    QCoreApplication::processEvents();
     QThread::sleep(1);
     return QRandomGenerator::global()->bounded(0, 3);
+}
+
+void updateAED(AED *aed,int quality){
+    if (quality == 0) emit aed->displayCompressionsSignal(0);
+    else if (quality == 1) emit aed->displayCompressionsSignal(1);
+    else if (quality == 2) emit aed->displayCompressionsSignal(2);
+    else if (quality == 3) emit aed->displayCompressionsSignal(3);
+    else if (quality == 4) emit aed->displayCompressionsSignal(4);
+    QCoreApplication::processEvents();
+}
+void pushHarder(AED *aed){
+    updateAED(aed,1);
+    qInfo("AED: PUSH HARDER");
+
+}
+void goodCompressions(AED* aed){
+    updateAED(aed,3);
+    qInfo("AED: Good Compressions");
+
+
+}
+void continueCPR(AED* aed){
+    updateAED(aed,2);
+    qInfo("AED: Continue CPR");
+
+}
+void Release(AED* aed){
+    updateAED(aed,4);
+    qInfo("AED: FULLY RELEASE");
+
 }
