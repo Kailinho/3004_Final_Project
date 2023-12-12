@@ -43,7 +43,7 @@ void MainWindow::initializePatient() {
 
         // Create the patient with the chosen type
         bool isAdult = (choice == "Adult");
-        int randomScenario = QRandomGenerator::global()->bounded(3, 4); // random choice between V-FIB and V-Tach
+        int randomScenario = QRandomGenerator::global()->bounded(2, 4); // random choice between V-FIB and V-Tach
         aed.createPatient(isAdult, randomScenario);
 
         qInfo("Patient created with type: %s", qPrintable(choice));
