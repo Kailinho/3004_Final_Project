@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>AED</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGraphicsView" name="graphicsView">
@@ -217,7 +217,10 @@ font-weight:bold;</string>
      <string># of Shocks: 0</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="badCPRButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>790</x>
@@ -230,7 +233,10 @@ font-weight:bold;</string>
      <string>Bad CPR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="okCPRButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>890</x>
@@ -243,7 +249,10 @@ font-weight:bold;</string>
      <string>OK CPR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="goodCPRButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>990</x>
@@ -256,7 +265,10 @@ font-weight:bold;</string>
      <string>Good CPR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="fullyReleaseCPRButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>790</x>
@@ -266,7 +278,23 @@ font-weight:bold;</string>
      </rect>
     </property>
     <property name="text">
-     <string>Dont Release Fully</string>
+     <string>Release CPR</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="CPRLabel">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>230</y>
+      <width>75</width>
+      <height>5</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

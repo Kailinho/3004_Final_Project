@@ -128,11 +128,11 @@ void AED::monitorHeart(){
 }
 
 void AED::deliverShock(){
-    int chargeNeeded = 10;
-    if (batteryLevel<=20){
+    int chargeNeeded = 20;
+    if (batteryLevel < chargeNeeded*2 && batteryLevel > chargeNeeded) {
         qInfo("AED: Low Battery Warning. This is the last shock the AED can generate before the batteries are replaced.");
     }
-    if(batteryLevel < chargeNeeded){
+    if(batteryLevel < chargeNeeded) {
         qInfo("AED: CHANGE BATTERIES");
         return;
     }
@@ -147,7 +147,7 @@ void AED::deliverShock(){
     QThread::sleep(1);
     qInfo("AED: SHOCK DELIVERED");
 
-    batteryLevel -= 20;
+    batteryLevel -= chargeNeeded;
     emit batteryLevelChanged(batteryLevel);
 
     shockCount += 1;
@@ -172,7 +172,6 @@ void AED::cprFeedback(int duration){
 }
 
 // Others
-
 void AED::createPatient(bool isAdult, int status){
     patient = new Patient(isAdult, status);
 }
@@ -180,6 +179,7 @@ void AED::createPatient(bool isAdult, int status){
 void AED::badCPRClicked(){
     pushHarder(this);
 }
+
 void AED::okCPRClicked(){
     continueCPR(this);
 }
@@ -187,6 +187,7 @@ void AED::okCPRClicked(){
 void AED::goodCPRClicked(){
     goodCompressions(this);
 }
+
 void AED::releaseClicked(){
     Release(this);
 }
