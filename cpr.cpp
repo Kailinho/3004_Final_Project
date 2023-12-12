@@ -1,4 +1,4 @@
-#include "CPR.h"
+#include "cpr.h"
 
 void RandomCPR(int duration){
    QElapsedTimer timer;

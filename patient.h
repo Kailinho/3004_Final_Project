@@ -1,34 +1,35 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
-#include <QtGlobal>
-#include <QString>
 #include <QObject>
+#include <QString>
 
 using namespace std;
 
-class Patient : public QObject{
-
+class Patient : public QObject {
     Q_OBJECT
 
-    public:
-        //Public static variable
-        static int p_count;
+public:
+    // Public static variable
+    static int p_count;
 
-        //Constructor/destructor
-        Patient(bool isAdult, int status, QObject *parent = nullptr);
-        ~Patient();
+    // Constructor
+    Patient(bool isAdult, int status, QObject *parent = nullptr);
 
-        //Getters
-        bool getIsAdult();
-        int getStatus();
+    // destructor
+    ~Patient();
 
-        //Setters
-        void setStatus(int newStatus);
-    private:
-        int num;
-        bool isAdult;
-        int status;
+    // Getters
+    bool getIsAdult();
+    int getStatus();
+
+    // Setters
+    void setStatus(int newStatus);
+
+private:
+    int num;
+    bool isAdult;
+    int status;
 };
 
 #endif // PATIENT_H

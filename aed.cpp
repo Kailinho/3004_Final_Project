@@ -1,6 +1,6 @@
 
 #include "aed.h"
-#include "CPR.h"
+#include "cpr.h"
 
 #define DEAD 0
 #define STABLE 1
@@ -127,12 +127,12 @@ void AED::monitorHeart(){
     }
 }
 
-void AED::deliverShock(){
+void AED::deliverShock() {
     int chargeNeeded = 20;
-    if (batteryLevel < chargeNeeded*2 && batteryLevel > chargeNeeded) {
+
+    if (batteryLevel < chargeNeeded*2 && batteryLevel >= chargeNeeded) {
         qInfo("AED: Low Battery Warning. This is the last shock the AED can generate before the batteries are replaced.");
-    }
-    if(batteryLevel < chargeNeeded) {
+    } else if (batteryLevel < chargeNeeded) {
         qInfo("AED: CHANGE BATTERIES");
         return;
     }
@@ -149,6 +149,9 @@ void AED::deliverShock(){
 
     batteryLevel -= chargeNeeded;
     emit batteryLevelChanged(batteryLevel);
+    if (batteryLevel < chargeNeeded*2 && batteryLevel >= chargeNeeded) {
+        qInfo("AED: Low Battery Warning. There is only enough charge for one more shock!");
+    }
 
     shockCount += 1;
     emit shockCountChanged(shockCount);

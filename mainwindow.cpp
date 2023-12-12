@@ -160,7 +160,7 @@ void MainWindow::displayCompressions(int quality) {
     CPRLevelLabel->show();
 }
 
-void MainWindow::CPRButtonsEnable(bool value){
+void MainWindow::CPRButtonsEnable(bool value) {
     // enable/disable CPR buttons
     ui->badCPRButton->setEnabled(value);
     ui->okCPRButton->setEnabled(value);

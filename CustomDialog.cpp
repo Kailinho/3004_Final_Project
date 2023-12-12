@@ -1,9 +1,8 @@
+#include "mainwindow.h"
 #include <QDialog>
 #include <QVBoxLayout>
-#include <QInputDialog>
 #include <QComboBox>
 #include <QPushButton>
-#include "mainwindow.h"
 #include <QApplication>
 
 class CustomDialog : public QDialog {
@@ -13,44 +12,38 @@ public:
 
         QVBoxLayout* layout = new QVBoxLayout(this);
 
+        // To add the combobox to the custom dialog
         QComboBox* comboBox = new QComboBox(this);
         comboBox->addItems(QStringList() << "Adult" << "Child");
         layout->addWidget(comboBox);
 
+        // To add the OK button to the custom dialog and connect it to the accept slot
         QPushButton* okButton = new QPushButton("OK", this);
         layout->addWidget(okButton);
-
         connect(okButton, &QPushButton::clicked, this, &CustomDialog::accept);
+
         // Set a fixed size
         setFixedSize(150, 100);
-
-        // Center the dialog on the main window
-        centerOnMainWindow();
-    }
-private:
-    void centerOnMainWindow() {
-        QWidget* mainWindow = parentWidget();
-        if (mainWindow) {
-            QPoint center = mainWindow->geometry().center();
-            move(center.x() - width() / 2, center.y() - height() / 2);
-        }
     }
 };
 
 void MainWindow::initializePatient() {
     CustomDialog dialog(this);
-    dialog.move(25,100);
-    if (dialog.exec() == QDialog::Accepted) {
+
+    dialog.move(25,100); // to move the custom dialog somewhere in the top left corner
+
+    if (dialog.exec() == QDialog::Accepted) { // if user clicked ok
         QString choice = "Adult"; // Default choice
+
         // Retrieve the selected patient type from the custom dialog
         QList<QComboBox*> comboBoxes = dialog.findChildren<QComboBox*>();
         if (!comboBoxes.isEmpty()) {
             choice = comboBoxes.first()->currentText();
         }
 
-        bool isAdult = (choice == "Adult");
         // Create the patient with the chosen type
-        int randomScenario = QRandomGenerator::global()->bounded(3, 4);
+        bool isAdult = (choice == "Adult");
+        int randomScenario = QRandomGenerator::global()->bounded(3, 4); // random choice between V-FIB and V-Tach
         aed.createPatient(isAdult, randomScenario);
 
         qInfo("Patient created with type: %s", qPrintable(choice));
@@ -59,7 +52,4 @@ void MainWindow::initializePatient() {
         qInfo("No Patient Type Selected. Please Restart the Device.");
         QApplication::quit();
     }
-
 }
-
-

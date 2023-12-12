@@ -30,7 +30,7 @@ private:
 
 private slots:
     void pressPowerButton();
-    void initializePatient();
+    void initializePatient(); // implemented in the CustomDialog.cpp file
     void applyPads();
     void updateBatteryLevel(int level);
     void updateShockCount(int count);
