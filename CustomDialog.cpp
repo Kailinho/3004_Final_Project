@@ -7,18 +7,18 @@
 
 class CustomDialog : public QDialog {
 public:
-    CustomDialog(QWidget* parent = nullptr) : QDialog(parent) {
+    CustomDialog(QWidget *parent = nullptr) : QDialog(parent) {
         setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 
-        QVBoxLayout* layout = new QVBoxLayout(this);
+        QVBoxLayout *layout = new QVBoxLayout(this);
 
         // To add the combobox to the custom dialog
-        QComboBox* comboBox = new QComboBox(this);
+        QComboBox *comboBox = new QComboBox(this);
         comboBox->addItems(QStringList() << "Adult" << "Child");
         layout->addWidget(comboBox);
 
         // To add the OK button to the custom dialog and connect it to the accept slot
-        QPushButton* okButton = new QPushButton("OK", this);
+        QPushButton *okButton = new QPushButton("OK", this);
         layout->addWidget(okButton);
         connect(okButton, &QPushButton::clicked, this, &CustomDialog::accept);
 
@@ -36,7 +36,7 @@ void MainWindow::initializePatient() {
         QString choice = "Adult"; // Default choice
 
         // Retrieve the selected patient type from the custom dialog
-        QList<QComboBox*> comboBoxes = dialog.findChildren<QComboBox*>();
+        QList<QComboBox *> comboBoxes = dialog.findChildren<QComboBox *>();
         if (!comboBoxes.isEmpty()) {
             choice = comboBoxes.first()->currentText();
         }

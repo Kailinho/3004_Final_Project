@@ -46,23 +46,21 @@ void MainWindow::pressPowerButton() {
     if (aed.getPower()) {
         ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(237, 51, 59);}");
     } else {
-        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(51, 209, 122);}");       
-        initializePatient();//Initialize patient when the device is turned on
+        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(51, 209, 122);}");
+        initializePatient(); // Initialize patient when the device is turned on
     }
 
+    // Turn AED ON/OFF
     aed.togglePower();
 
-    // Changes the color of the power button and enables/disables the buttons for the pads
+    // Enable/disable the buttons for the pads
     if (aed.getPower()) {
-        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; color: rgb(255, 255, 255); background-color: rgb(51, 209, 122);}");
         ui->adultPad1CheckBox->setEnabled(true);
         ui->adultPad2CheckBox->setEnabled(true);
         ui->childPad1CheckBox->setEnabled(true);
         ui->childPad2CheckBox->setEnabled(true);
     } else {
-        ui->powerButton->setStyleSheet("QPushButton{ image: url(:/images/power-button.png); border-radius: 30px; background-color: rgb(237, 51, 59);}");
         ui->batteryLabel->setText("Battery Level: Initializing");
-
         ui->adultPad1CheckBox->setChecked(false);
         ui->adultPad2CheckBox->setChecked(false);
         ui->childPad1CheckBox->setChecked(false);
@@ -110,22 +108,19 @@ void MainWindow::displayHR(int status) {
     // Update the image based on the status
     QPixmap originalImage;
     switch (status) {
-        case 1:
+        case 0:
             originalImage.load(":/images/asys.jpg");
             break;
-        case 2:
+        case 1:
             originalImage.load(":/images/stable.jpg");
             break;
-        case 3:
+        case 2:
             originalImage.load(":/images/vfib.jpg");
             break;
-        case 4:
+        case 3:
             originalImage.load(":/images/vtach.jpg");
             break;
-        case 5:
-            originalImage.load(":/images/pea.jpg");
-            break;
-        case 6:
+        case 4:
             originalImage.load(":/images/black.jpg");
             break;
         default:
