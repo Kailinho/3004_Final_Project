@@ -23,11 +23,13 @@ There was a lot of collaboration on the code, especially towards the end. But th
 - UI Design and Implementation: Kailash
 - Basic Code Framework (Setting up header files, etc): Mathew
 - AED Power ON/OFF and Self-Test: Mathew + Annie
+- Battery Functionality: Kailash + Mathew 
 - Electrode Pads: Mathew + Annie
 - CPR Functionality: Thara
 - AED Shock: Mathew + Annie
 - Patient Functionality: Annie + Kailash + Mathew
 - Heart Rate Display: Thara
+- Readme: All
 - Final Touches: All
 
 
@@ -46,6 +48,7 @@ Installation, Setup and Instructions for Use.
     - Press the power button.
     - Select Adult or Child from the Combobox
     - Click on OK
+    - Apply the respective electrode pads to the patient depending on the patient type.
     - While performing CPR:
     	- Click on the CPR buttons to adjust the CPR quality
 - For testing:
