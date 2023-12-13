@@ -15,6 +15,7 @@ Task Distributions (Design)
 - State Diagrams: Thara
 - Design Decisions: Kailash
 - Traceability Matrix: Mathew
+- Video Demo: Thara
 
 
 Task Distributions (Code)
@@ -47,3 +48,7 @@ Installation, Setup and Instructions for Use.
     - Click on OK
     - While performing CPR:
     	- Click on the CPR buttons to adjust the CPR quality
+- For testing:
+    - You can change inital patient status in the custonDialogBox class.
+    - You can change the patient status after CPR in the CPR utility module.
+
