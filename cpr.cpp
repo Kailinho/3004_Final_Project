@@ -19,9 +19,6 @@ int startCPR(AED *aed, int duration) {
 
     // Return a random new status for the patient
    return QRandomGenerator::global()->bounded(0, 3);
-
-
-
 }
 
 void RandomCPR(int duration) {

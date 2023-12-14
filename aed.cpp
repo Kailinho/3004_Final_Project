@@ -144,8 +144,8 @@ void AED::deliverShock() {
 
     // Update battery level
     batteryLevel -= chargeNeeded;
-    if(batteryLevel==0){
-        batteryLevel=1;
+    if(batteryLevel==0) {
+        batteryLevel=1; // to ensure there is always enough charge for monitoring
     }
     emit batteryLevelChanged(batteryLevel);
     if (batteryLevel < chargeNeeded*2 && batteryLevel >= chargeNeeded) {
