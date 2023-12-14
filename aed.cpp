@@ -144,6 +144,9 @@ void AED::deliverShock() {
 
     // Update battery level
     batteryLevel -= chargeNeeded;
+    if(batteryLevel==0){
+        batteryLevel=1;
+    }
     emit batteryLevelChanged(batteryLevel);
     if (batteryLevel < chargeNeeded*2 && batteryLevel >= chargeNeeded) {
         qInfo("AED: Low Battery Warning. There is only enough charge for one more shock!");

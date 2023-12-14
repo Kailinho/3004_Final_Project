@@ -278,7 +278,7 @@ font-weight:bold;</string>
      </rect>
     </property>
     <property name="text">
-     <string>Release CPR</string>
+     <string>Dont Fully Release</string>
     </property>
    </widget>
    <widget class="QLabel" name="CPRLabel">

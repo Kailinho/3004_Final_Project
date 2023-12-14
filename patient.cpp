@@ -5,7 +5,7 @@ int Patient::p_count = 1;
 
 // Constructor
 Patient::Patient(bool isAdult, int status, QObject *parent): QObject(parent) {
-    // Each patient is numbered 1, 2, 3, ...
+    // Each patient is generated and numbered 1, 2, 3, ...
     num = p_count;
     p_count++;
 
